@@ -20,8 +20,13 @@ public class AlumnoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+<<<<<<< HEAD:src/main/java/integradora_poo_2026/controller/MascotaServlet.java
+        List<Mascota> lista = mascotaDao.getAll();
+        request.setAttribute("listaMascotas", lista);
+=======
         List<Alumno> lista = alumnoDao.getAll();
         request.setAttribute("listaAlumnos", lista);
+>>>>>>> 91eefe9077bb1b43aa910bae3c13f44ef4752ee7:src/main/java/integradora_poo_2026/controller/AlumnoServlet.java
         request.getRequestDispatcher("gestion-alumno.jsp").forward(request, response);
     }
 
