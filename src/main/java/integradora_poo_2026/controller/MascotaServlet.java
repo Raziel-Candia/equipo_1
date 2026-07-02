@@ -21,7 +21,7 @@ public class MascotaServlet extends HttpServlet {
             throws ServletException, IOException {
         List<Mascota> lista = mascotaDao.getAll();
         request.setAttribute("listaMascotas", lista);
-        request.getRequestDispatcher("gestion-mascotas.jsp").forward(request, response);
+        request.getRequestDispatcher("gestion-alumno.jsp").forward(request, response);
     }
 
     @Override
