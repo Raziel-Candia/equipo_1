@@ -1,6 +1,6 @@
 package integradora_poo_2026.model;
 
-public class Mascota {
+public class Alumno {
     private int id;
     private String nombre;
     private String especie;
@@ -9,10 +9,10 @@ public class Mascota {
     private String foto;
     private boolean vacunada;
 
-    public Mascota() {
+    public Alumno() {
     }
 
-    public Mascota(int id, String nombre, String especie, int edad, String personalidad, String foto, boolean vacunada) {
+    public Alumno(int id, String nombre, String especie, int edad, String personalidad, String foto, boolean vacunada) {
         this.id = id;
         this.nombre = nombre;
         this.especie = especie;
