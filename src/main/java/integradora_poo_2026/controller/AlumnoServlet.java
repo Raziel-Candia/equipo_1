@@ -1,27 +1,28 @@
 package integradora_poo_2026.controller;
 
+import integradora_poo_2026.model.dao.AlumnoDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import mx.edu.utez.integradora_poo_2026.model.Mascota;
+import mx.edu.utez.integradora_poo_2026.model.Alumno;
 import mx.edu.utez.integradora_poo_2026.model.dao.MascotaDao;
 
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "MascotaServlet", value = "/mascota")
-public class MascotaServlet extends HttpServlet {
+@WebServlet(name = "AlumnoServlet", value = "/alumno")
+public class AlumnoServlet extends HttpServlet {
 
-    private final MascotaDao mascotaDao = new MascotaDao();
+    private final AlumnoDao alumnoDao = new AlumnoDao();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Mascota> lista = mascotaDao.getAll();
-        request.setAttribute("listaMascotas", lista);
-        request.getRequestDispatcher("gestion-mascotas.jsp").forward(request, response);
+        List<Alumno> lista = alumnoDao.getAll();
+        request.setAttribute("listaAlumnos", lista);
+        request.getRequestDispatcher("gestion-alumno.jsp").forward(request, response);
     }
 
     @Override
