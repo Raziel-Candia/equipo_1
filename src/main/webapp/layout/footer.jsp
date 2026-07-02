@@ -6,7 +6,7 @@
 <!-- pie de página -->
 <footer class="footer mt-auto py-3 bg-black">
     <div class="container text-center text-white">
-        <span>&copy; Derick Lagunes - Todos los derechos reservados</span>
+        <span>&copy; Equipo 1 - Todos los derechos reservados</span>
     </div>
 </footer>
 
