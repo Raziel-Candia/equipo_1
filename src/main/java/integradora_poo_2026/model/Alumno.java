@@ -1,33 +1,24 @@
 package integradora_poo_2026.model;
 
 public class Alumno {
-    private int id;
     private String nombre;
-    private String especie;
+    private String apellidos;
     private int edad;
-    private String personalidad;
-    private String foto;
-    private boolean vacunada;
+    private String matricula;
+    private String correo;
+    private String sexo;
 
     public Alumno() {
     }
 
-    public Alumno(int id, String nombre, String especie, int edad, String personalidad, String foto, boolean vacunada) {
-        this.id = id;
+
+    public Alumno(String nombre, String apellidos, int edad, String matricula, String correo, String sexo) {
         this.nombre = nombre;
-        this.especie = especie;
+        this.apellidos = apellidos;
         this.edad = edad;
-        this.personalidad = personalidad;
-        this.foto = foto;
-        this.vacunada = vacunada;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.matricula = matricula;
+        this.correo = correo;
+        this.sexo = sexo;
     }
 
     public String getNombre() {
@@ -38,12 +29,12 @@ public class Alumno {
         this.nombre = nombre;
     }
 
-    public String getEspecie() {
-        return especie;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setEspecie(String especie) {
-        this.especie = especie;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     public int getEdad() {
@@ -54,33 +45,39 @@ public class Alumno {
         this.edad = edad;
     }
 
-    public String getPersonalidad() {
-        return personalidad;
+    public String getMatricula() {
+        return matricula;
     }
 
-    public void setPersonalidad(String personalidad) {
-        this.personalidad = personalidad;
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-    public boolean isVacunada() {
-        return vacunada;
+    public String getSexo() {
+        return sexo;
     }
 
-    public void setVacunada(boolean vacunada) {
-        this.vacunada = vacunada;
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 
     @Override
     public String toString() {
-        return id + ',' + nombre + ',' + especie + ',' + edad
-                + ',' + personalidad + ',' + foto + ',' + vacunada;
+        return
+                nombre + ',' +
+                        apellidos + ',' +
+                        edad +
+                        matricula + ',' +
+                        correo + ',' +
+                        sexo
+                ;
     }
 }
