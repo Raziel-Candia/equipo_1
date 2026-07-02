@@ -22,7 +22,7 @@ public class AlumnoServlet extends HttpServlet {
             throws ServletException, IOException {
         List<Alumno> lista = alumnoDao.getAll();
         request.setAttribute("listaAlumnos", lista);
-        request.getRequestDispatcher("gestion-alumnos.jsp").forward(request, response);
+        request.getRequestDispatcher("gestion-alumno.jsp").forward(request, response);
     }
 
     @Override
