@@ -14,7 +14,7 @@ public class AlumnoDao implements Dao<Alumno, String> {
 
     @Override
     public boolean create(Alumno entidad) {
-        String sql = "INSERT INTO alumnos (nombre, apellidos, edad, matricula, correo_electronico, sexo) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO alumno (nombre, apellidos, edad, matricula, correoelectronico, sexo) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = SQLConnector.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -35,7 +35,7 @@ public class AlumnoDao implements Dao<Alumno, String> {
     @Override
     public List<Alumno> getAll() {
         List<Alumno> lista = new ArrayList<>();
-        String sql = "SELECT nombre, apellidos, edad, matricula, correo_electronico, sexo FROM alumnos";
+        String sql = "SELECT nombre, apellidos, edad, matricula, correoelectronico, sexo FROM alumno";
         try (Connection conn = SQLConnector.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -46,7 +46,7 @@ public class AlumnoDao implements Dao<Alumno, String> {
                         rs.getString("apellidos"),
                         rs.getInt("edad"),
                         rs.getString("matricula"),
-                        rs.getString("correo_electronico"),
+                        rs.getString("correoelectronico"),
                         rs.getString("sexo")
                 );
                 lista.add(alumno);
@@ -59,7 +59,7 @@ public class AlumnoDao implements Dao<Alumno, String> {
 
     @Override
     public Alumno getById(String id) {
-        String sql = "SELECT nombre, apellidos, edad, matricula, correo_electronico, sexo FROM alumnos WHERE matricula = ?";
+        String sql = "SELECT nombre, apellidos, edad, matricula, correoelectronico, sexo FROM alumno WHERE matricula = ?";
         try (Connection conn = SQLConnector.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -71,7 +71,7 @@ public class AlumnoDao implements Dao<Alumno, String> {
                             rs.getString("apellidos"),
                             rs.getInt("edad"),
                             rs.getString("matricula"),
-                            rs.getString("correo_electronico"),
+                            rs.getString("correoelectronico"),
                             rs.getString("sexo")
                     );
                 }
@@ -79,12 +79,12 @@ public class AlumnoDao implements Dao<Alumno, String> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null; // Si no se encuentra el alumno
+        return null;
     }
 
     @Override
     public boolean update(Alumno entidad) {
-        String sql = "UPDATE alumnos SET nombre = ?, apellidos = ?, edad = ?, correo_electronico = ?, sexo = ? WHERE matricula = ?";
+        String sql = "UPDATE alumno SET nombre = ?, apellidos = ?, edad = ?, correoelectronico = ?, sexo = ? WHERE matricula = ?";
         try (Connection conn = SQLConnector.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -104,7 +104,7 @@ public class AlumnoDao implements Dao<Alumno, String> {
 
     @Override
     public boolean delete(String id) {
-        String sql = "DELETE FROM alumnos WHERE matricula = ?";
+        String sql = "DELETE FROM alumno WHERE matricula = ?";
         try (Connection conn = SQLConnector.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 

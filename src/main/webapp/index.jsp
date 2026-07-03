@@ -77,7 +77,6 @@
                         <label for="matricula" class="form-label">Matrícula</label>
                         <input type="text" class="form-control" id="matricula" name="matricula" placeholder="Ej: AL202610" required>
                     </div>
-
                     <div class="mb-3">
                         <label for="correo" class="form-label">Correo electrónico</label>
                         <input type="email" class="form-control" id="correo" name="correoElectronico" placeholder="ejemplo@universidad.com" required>
