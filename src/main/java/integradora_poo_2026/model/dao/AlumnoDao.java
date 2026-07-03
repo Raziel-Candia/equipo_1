@@ -14,19 +14,18 @@ public class AlumnoDao implements Dao<Alumno, String> {
 
     @Override
     public boolean create(Alumno entidad) {
-        String sql = "INSERT INTO ALUMNOS(nombre, apellidos, edad, matricula, correo, sexo) VALUES(?, ?, ?, ?, ?, ?)";
-        try (Connection con = SQLConnector.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        String sql = "INSERT INTO alumnos (nombre, apellidos, edad, matricula, correo_electronico, sexo) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = SQLConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, entidad.getNombre());
             ps.setString(2, entidad.getApellidos());
             ps.setInt(3, entidad.getEdad());
             ps.setString(4, entidad.getMatricula());
-            ps.setString(5, entidad.getCorreo());
+            ps.setString(5, entidad.getCorreoElectronico());
             ps.setString(6, entidad.getSexo());
 
-            int filasAfectadas = ps.executeUpdate();
-            return filasAfectadas > 0;
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -35,67 +34,68 @@ public class AlumnoDao implements Dao<Alumno, String> {
 
     @Override
     public List<Alumno> getAll() {
-        List<Alumno> datos = new ArrayList<>();
-        try (Connection con = SQLConnector.getConnection();
-             PreparedStatement ps = con.prepareStatement("SELECT * FROM ALUMNOS");
+        List<Alumno> lista = new ArrayList<>();
+        String sql = "SELECT nombre, apellidos, edad, matricula, correo_electronico, sexo FROM alumnos";
+        try (Connection conn = SQLConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Alumno a = new Alumno();
-                a.setNombre(rs.getString("nombre"));
-                a.setApellidos(rs.getString("apellidos"));
-                a.setEdad(rs.getInt("edad"));
-                a.setMatricula(rs.getString("matricula"));
-                a.setCorreo(rs.getString("correo"));
-                a.setSexo(rs.getString("sexo"));
-                datos.add(a);
+                Alumno alumno = new Alumno(
+                        rs.getString("nombre"),
+                        rs.getString("apellidos"),
+                        rs.getInt("edad"),
+                        rs.getString("matricula"),
+                        rs.getString("correo_electronico"),
+                        rs.getString("sexo")
+                );
+                lista.add(alumno);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return datos;
+        return lista;
     }
 
     @Override
-    public Alumno getById(String matricula) {
-        String sql = "SELECT * FROM ALUMNOS WHERE matricula = ?";
-        try (Connection con = SQLConnector.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+    public Alumno getById(String id) {
+        String sql = "SELECT nombre, apellidos, edad, matricula, correo_electronico, sexo FROM alumnos WHERE matricula = ?";
+        try (Connection conn = SQLConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, matricula);
+            ps.setString(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Alumno a = new Alumno();
-                    a.setNombre(rs.getString("nombre"));
-                    a.setApellidos(rs.getString("apellidos"));
-                    a.setEdad(rs.getInt("edad"));
-                    a.setMatricula(rs.getString("matricula"));
-                    a.setCorreo(rs.getString("correo"));
-                    a.setSexo(rs.getString("sexo"));
-                    return a;
+                    return new Alumno(
+                            rs.getString("nombre"),
+                            rs.getString("apellidos"),
+                            rs.getInt("edad"),
+                            rs.getString("matricula"),
+                            rs.getString("correo_electronico"),
+                            rs.getString("sexo")
+                    );
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return null; // Si no se encuentra el alumno
     }
 
     @Override
     public boolean update(Alumno entidad) {
-        String sql = "UPDATE ALUMNOS SET nombre = ?, apellidos = ?, edad = ?, correo = ?, sexo = ? WHERE matricula = ?";
-        try (Connection con = SQLConnector.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        String sql = "UPDATE alumnos SET nombre = ?, apellidos = ?, edad = ?, correo_electronico = ?, sexo = ? WHERE matricula = ?";
+        try (Connection conn = SQLConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, entidad.getNombre());
             ps.setString(2, entidad.getApellidos());
             ps.setInt(3, entidad.getEdad());
-            ps.setString(4, entidad.getCorreo());
+            ps.setString(4, entidad.getCorreoElectronico());
             ps.setString(5, entidad.getSexo());
             ps.setString(6, entidad.getMatricula());
 
-            int filasAfectadas = ps.executeUpdate();
-            return filasAfectadas > 0;
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -103,15 +103,13 @@ public class AlumnoDao implements Dao<Alumno, String> {
     }
 
     @Override
-    public boolean delete(String matricula) {
-        String sql = "DELETE FROM ALUMNOS WHERE matricula = ?";
-        try (Connection con = SQLConnector.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+    public boolean delete(String id) {
+        String sql = "DELETE FROM alumnos WHERE matricula = ?";
+        try (Connection conn = SQLConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, matricula);
-
-            int filasAfectadas = ps.executeUpdate();
-            return filasAfectadas > 0;
+            ps.setString(1, id);
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

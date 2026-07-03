@@ -10,41 +10,37 @@
     <div class="col-md-7">
         <div class="row">
             <h4 class="text-secondary col-6">Aquí están todos los alumnos</h4>
-            <a href="alumno" class="btn btn-primary col-6 align-content-center text-center"><i class="bi bi-arrow-clockwise"></i> Cargar Alumnos</a>
+            <a href="AlumnoServlet" class="btn btn-primary col-6 align-content-center text-center"><i class="bi bi-arrow-clockwise"></i> Cargar Alumnos</a>
         </div>
 
         <c:choose>
-            <%-- Condición 1: Si la lista es nula o está vacía --%>
-            <c:when test="${empty listaAlumnos}">
+            <c:when test="${empty alumnos}">
                 <div class="alert alert-info text-center mt-4" role="alert">
-                    <i class="bi bi-info-circle-fill"></i> No hay Alumnos registrados en este momento.
+                    <i class="bi bi-info-circle-fill"></i> No hay Alumnos registrados en este momento o necesitas pulsar "Cargar Alumnos".
                 </div>
             </c:when>
 
-            <%-- Condición por defecto: Si la lista SÍ tiene datos --%>
             <c:otherwise>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover mt-4 align-middle">
                         <thead class="table-dark">
                         <tr>
-                            <th>ID</th>
+                            <th>Matrícula</th>
                             <th>Nombre o nombres</th>
                             <th>Apellidos</th>
                             <th>Edad</th>
-                            <th>Matrícula</th>
                             <th>Correo electrónico</th>
                             <th>Sexo</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${listaAlumnos}" var="alumno">
+                        <c:forEach items="${alumnos}" var="alumno">
                             <tr>
-                                <td><strong>${alumno.id}</strong></td>
+                                <td><span class="badge bg-secondary">${alumno.matricula}</span></td>
                                 <td>${alumno.nombre}</td>
                                 <td>${alumno.apellidos}</td>
                                 <td>${alumno.edad}</td>
-                                <td><span class="badge bg-secondary">${alumno.matricula}</span></td>
-                                <td>${alumno.correo}</td>
+                                <td>${alumno.correoElectronico}</td>
                                 <td>${alumno.sexo}</td>
                             </tr>
                         </c:forEach>
@@ -60,8 +56,7 @@
             <div class="card-body">
                 <h4 class="card-title text-primary mb-4"><i class="bi bi-plus-circle-fill"></i> ¡Registra un Alumno!</h4>
 
-                <form action="alumno" method="POST">
-                    <input type="hidden" name="action" value="create">
+                <form action="AlumnoServlet" method="POST">
 
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre o nombres</label>
@@ -85,14 +80,13 @@
 
                     <div class="mb-3">
                         <label for="correo" class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" id="correo" name="correo" placeholder="ejemplo@universidad.com" required>
+                        <input type="email" class="form-control" id="correo" name="correoElectronico" placeholder="ejemplo@universidad.com" required>
                     </div>
+
                     <div class="mb-3">
                         <label for="sexo" class="form-label">Sexo</label>
                         <input type="text" class="form-control" id="sexo" name="sexo" placeholder="Ej. H" required>
                     </div>
-
-
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Guardar</button>
