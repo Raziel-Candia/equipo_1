@@ -1,6 +1,6 @@
 package integradora_poo_2026.model.dao;
 
-import mx.edu.utez.integradora_poo_2026.model.Mascota;
+import integradora_poo_2026.model.Alumno;
 import mx.edu.utez.integradora_poo_2026.utils.SQLConnector;
 
 import java.sql.Connection;
@@ -10,45 +10,45 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlumnoDao implements Dao<Mascota, Integer>{
+public class AlumnoDao implements Dao<Alumno, String> {
+
     @Override
-    public boolean create(Mascota entidad) {
-        String sql = "INSERT INTO MASCOTAS(nombre, especie, edad, personalidad, foto, vacunada) VALUES(?, ?, ?, ?, ?, ?)";
+    public boolean create(Alumno entidad) {
+        String sql = "INSERT INTO ALUMNOS(nombre, apellidos, edad, matricula, correo, sexo) VALUES(?, ?, ?, ?, ?, ?)";
         try (Connection con = SQLConnector.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
+
             ps.setString(1, entidad.getNombre());
-            ps.setString(2, entidad.getEspecie());
+            ps.setString(2, entidad.getApellidos());
             ps.setInt(3, entidad.getEdad());
-            ps.setString(4, entidad.getPersonalidad());
-            ps.setString(5, entidad.getFoto());
-            ps.setInt(6, entidad.isVacunada() ? 1 : 0);
+            ps.setString(4, entidad.getMatricula());
+            ps.setString(5, entidad.getCorreo());
+            ps.setString(6, entidad.getSexo());
 
             int filasAfectadas = ps.executeUpdate();
             return filasAfectadas > 0;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
 
     @Override
-    public List<Mascota> getAll() {
-        List<Mascota> datos = new ArrayList<>();
+    public List<Alumno> getAll() {
+        List<Alumno> datos = new ArrayList<>();
         try (Connection con = SQLConnector.getConnection();
-             PreparedStatement ps = con.prepareStatement("SELECT * FROM MASCOTAS");
+             PreparedStatement ps = con.prepareStatement("SELECT * FROM ALUMNOS");
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Mascota m = new Mascota();
-                m.setId(rs.getInt("id"));
-                m.setNombre(rs.getString("nombre"));
-                m.setEspecie(rs.getString("especie"));
-                m.setEdad(rs.getInt("edad"));
-                m.setPersonalidad(rs.getString("personalidad"));
-                m.setFoto(rs.getString("foto"));
-                m.setVacunada(rs.getInt("vacunada") == 1);
-                datos.add(m);
+                Alumno a = new Alumno();
+                a.setNombre(rs.getString("nombre"));
+                a.setApellidos(rs.getString("apellidos"));
+                a.setEdad(rs.getInt("edad"));
+                a.setMatricula(rs.getString("matricula"));
+                a.setCorreo(rs.getString("correo"));
+                a.setSexo(rs.getString("sexo"));
+                datos.add(a);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -57,23 +57,22 @@ public class AlumnoDao implements Dao<Mascota, Integer>{
     }
 
     @Override
-    public Mascota getById(Integer id) {
-        String sql = "SELECT * FROM MASCOTAS WHERE id = ?";
+    public Alumno getById(String matricula) {
+        String sql = "SELECT * FROM ALUMNOS WHERE matricula = ?";
         try (Connection con = SQLConnector.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
+            ps.setString(1, matricula);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Mascota m = new Mascota();
-                    m.setId(rs.getInt("id"));
-                    m.setNombre(rs.getString("nombre"));
-                    m.setEspecie(rs.getString("especie"));
-                    m.setEdad(rs.getInt("edad"));
-                    m.setPersonalidad(rs.getString("personalidad"));
-                    m.setFoto(rs.getString("foto"));
-                    m.setVacunada(rs.getInt("vacunada") == 1);
-                    return m;
+                    Alumno a = new Alumno();
+                    a.setNombre(rs.getString("nombre"));
+                    a.setApellidos(rs.getString("apellidos"));
+                    a.setEdad(rs.getInt("edad"));
+                    a.setMatricula(rs.getString("matricula"));
+                    a.setCorreo(rs.getString("correo"));
+                    a.setSexo(rs.getString("sexo"));
+                    return a;
                 }
             }
         } catch (SQLException e) {
@@ -83,18 +82,17 @@ public class AlumnoDao implements Dao<Mascota, Integer>{
     }
 
     @Override
-    public boolean update(Mascota entidad) {
-        String sql = "UPDATE MASCOTAS SET nombre = ?, especie = ?, edad = ?, personalidad = ?, foto = ?, vacunada = ? WHERE id = ?";
+    public boolean update(Alumno entidad) {
+        String sql = "UPDATE ALUMNOS SET nombre = ?, apellidos = ?, edad = ?, correo = ?, sexo = ? WHERE matricula = ?";
         try (Connection con = SQLConnector.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, entidad.getNombre());
-            ps.setString(2, entidad.getEspecie());
+            ps.setString(2, entidad.getApellidos());
             ps.setInt(3, entidad.getEdad());
-            ps.setString(4, entidad.getPersonalidad());
-            ps.setString(5, entidad.getFoto());
-            ps.setInt(6, entidad.isVacunada() ? 1 : 0);
-            ps.setInt(7, entidad.getId());
+            ps.setString(4, entidad.getCorreo());
+            ps.setString(5, entidad.getSexo());
+            ps.setString(6, entidad.getMatricula());
 
             int filasAfectadas = ps.executeUpdate();
             return filasAfectadas > 0;
@@ -105,12 +103,12 @@ public class AlumnoDao implements Dao<Mascota, Integer>{
     }
 
     @Override
-    public boolean delete(Integer id) {
-        String sql = "DELETE FROM MASCOTAS WHERE id = ?";
+    public boolean delete(String matricula) {
+        String sql = "DELETE FROM ALUMNOS WHERE matricula = ?";
         try (Connection con = SQLConnector.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
+            ps.setString(1, matricula);
 
             int filasAfectadas = ps.executeUpdate();
             return filasAfectadas > 0;
