@@ -83,3 +83,38 @@ public class AlumnoDao implements Dao<Alumno, String> {
 
     @Override
     public boolean update(Alumno entidad) {
+        String sql = "UPDATE ALUMNOS SET nombre = ?, apellidos = ?, edad = ?, correo = ?, sexo = ? WHERE matricula = ?";
+        try (Connection con = SQLConnector.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, entidad.getNombre());
+            ps.setString(2, entidad.getApellidos());
+            ps.setInt(3, entidad.getEdad());
+            ps.setString(4, entidad.getCorreo());
+            ps.setString(5, entidad.getSexo());
+            ps.setString(6, entidad.getMatricula());
+
+            int filasAfectadas = ps.executeUpdate();
+            return filasAfectadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean delete(String matricula) {
+        String sql = "DELETE FROM ALUMNOS WHERE matricula = ?";
+        try (Connection con = SQLConnector.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, matricula);
+
+            int filasAfectadas = ps.executeUpdate();
+            return filasAfectadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+}
